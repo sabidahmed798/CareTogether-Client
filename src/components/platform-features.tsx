@@ -1,246 +1,145 @@
 "use client";
 
-import * as React from "react";
-import Link from "next/link";
-import type { LucideIcon } from "lucide-react";
 import {
-  ArrowRightIcon,
-  CalendarIcon,
-  GlobeIcon,
-  HeartIcon,
-  LineChartIcon,
-  MapPinIcon,
-  UsersIcon,
+  MapPin,
+  Users,
+  CalendarDays,
+  Heart,
+  ChartNoAxesColumnIncreasing,
+  Globe,
 } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 
-type FeatureAccent = "coral" | "teal";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
-type Feature = {
-  icon: LucideIcon;
-  title: string;
-  description: string;
-  accent: FeatureAccent;
-};
-
-const FEATURES: Feature[] = [
+// Feature information
+const features = [
   {
-    icon: MapPinIcon,
+    icon: MapPin,
     title: "Local Initiatives",
     description:
-      "Discover community projects running across Jashore, from health camps to clean-up drives.",
-    accent: "coral",
+      "Discover community projects across Jashore, from health camps to clean-up drives.",
+    color: "text-cyan-400",
   },
   {
-    icon: UsersIcon,
+    icon: Users,
     title: "Volunteer Matching",
     description:
-      "Find opportunities that fit your skills, your free time and your neighbourhood.",
-    accent: "teal",
+      "Find opportunities that match your skills, free time and neighbourhood.",
+    color: "text-violet-400",
   },
   {
-    icon: CalendarIcon,
+    icon: CalendarDays,
     title: "Event Management",
     description:
-      "Create, join and track events with simple sign-ups and timely reminders.",
-    accent: "coral",
+      "Create, join and manage community events with simple sign-ups.",
+    color: "text-blue-400",
   },
   {
-    icon: HeartIcon,
+    icon: Heart,
     title: "Support Those in Need",
     description:
-      "Connect with families and individuals who need help, and support them directly.",
-    accent: "teal",
+      "Connect with families and individuals who need help in your community.",
+    color: "text-pink-400",
   },
   {
-    icon: LineChartIcon,
+    icon: ChartNoAxesColumnIncreasing,
     title: "Transparent Impact",
     description:
-      "See how every contribution turns into real, measurable results for the community.",
-    accent: "coral",
+      "See how every contribution creates measurable results for the community.",
+    color: "text-emerald-400",
   },
   {
-    icon: GlobeIcon,
+    icon: Globe,
     title: "Community Network",
     description:
       "Meet neighbours, groups and organizations working for a better Jashore.",
-    accent: "teal",
+    color: "text-orange-400",
   },
 ];
-
-const ACCENT_CLASS: Record<FeatureAccent, string> = {
-  coral: "bg-[#ff6b5b]/12 text-[#ff6b5b] group-hover/card:shadow-[#ff6b5b]/30",
-  teal: "bg-[#3ec2b4]/12 text-[#3ec2b4] group-hover/card:shadow-[#3ec2b4]/30",
-};
-
-/**
- * Fades/slides its child in once it scrolls into view (staggered by `delay`).
- * Reduced motion is handled in CSS, where `.reveal` is forced visible.
- */
-function Reveal({
-  children,
-  delay = 0,
-  className,
-}: {
-  children: React.ReactNode;
-  /** Stagger delay in milliseconds, applied after the element is revealed. */
-  delay?: number;
-  className?: string;
-}) {
-  const ref = React.useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = React.useState(false);
-
-  // Reduced motion is handled in CSS (`.reveal` is forced visible there), so no
-  // special-casing is needed here.
-  React.useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (!entry.isIntersecting) return;
-        observer.disconnect();
-        setVisible(true);
-      },
-      { threshold: 0.15, rootMargin: "0px 0px -5% 0px" }
-    );
-
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
-
-  return (
-    <div
-      ref={ref}
-      data-visible={visible ? "true" : "false"}
-      style={{ "--reveal-delay": `${delay}ms` } as React.CSSProperties}
-      className={cn("reveal", className)}
-    >
-      {children}
-    </div>
-  );
-}
-
-function FeatureCard({ feature }: { feature: Feature }) {
-  const Icon = feature.icon;
-
-  return (
-    <Card className="group/card h-full gap-0 rounded-2xl border border-white/10 bg-white/[0.04] p-6 ring-0 transition-all duration-300 ease-out hover:-translate-y-1.5 hover:border-white/20 hover:bg-white/[0.06] hover:shadow-xl hover:shadow-black/25 sm:p-7">
-      <CardHeader className="gap-0 px-0">
-        <span
-          aria-hidden="true"
-          className={cn(
-            "flex size-12 w-fit items-center justify-center rounded-xl shadow-lg transition-all duration-300 ease-out group-hover/card:scale-110",
-            ACCENT_CLASS[feature.accent]
-          )}
-        >
-          <Icon className="size-6" />
-        </span>
-        <CardTitle className="mt-5 text-lg font-semibold tracking-tight text-white sm:text-xl">
-          {feature.title}
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="mt-2.5 px-0">
-        <CardDescription className="text-sm leading-relaxed text-white/60 transition-colors duration-300 group-hover/card:text-white/75">
-          {feature.description}
-        </CardDescription>
-      </CardContent>
-    </Card>
-  );
-}
 
 export function PlatformFeatures() {
   return (
     <section
       aria-labelledby="platform-features-heading"
-      className="relative isolate overflow-hidden bg-[#08201d]"
+      className="relative overflow-hidden bg-[#05221D] px-4 py-20 sm:px-6 lg:px-8"
     >
-      {/* Ambient teal + coral glows */}
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10">
-        <div className="absolute -top-40 -right-32 size-[34rem] rounded-full bg-[#3ec2b4]/10 blur-[130px]" />
-        <div className="absolute -bottom-48 -left-40 size-[30rem] rounded-full bg-[#ff6b5b]/8 blur-[130px]" />
-      </div>
+      {/* Background lighting */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -left-40 top-20 size-96 rounded-full bg-purple-600/20 blur-[120px]"
+      />
 
-      <div className="mx-auto w-full max-w-7xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-24">
-        {/* Section header */}
-        <Reveal className="max-w-2xl">
-          <p className="flex items-center gap-3 text-xs font-semibold tracking-[0.22em] text-white/70 sm:text-sm">
-            <span aria-hidden="true" className="h-0.5 w-8 rounded-full bg-[#ff6b5b]" />
-            WHY CARE TOGETHER
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -right-40 bottom-0 size-96 rounded-full bg-cyan-500/20 blur-[120px]"
+      />
+
+      {/* Main content */}
+      <div className="relative mx-auto max-w-7xl">
+        {/* Section heading */}
+        <div className="mx-auto mb-14 max-w-2xl text-center">
+          <p className="mb-4 text-sm font-semibold uppercase tracking-[0.3em] text-white/90">
+            Why Care Together
           </p>
+
           <h2
             id="platform-features-heading"
-            className="mt-4 text-3xl font-bold tracking-tight text-white sm:mt-5 sm:text-4xl lg:text-5xl"
+            className="text-3xl font-bold tracking-tight text-white sm:text-4xl lg:text-5xl"
           >
             Platform Features
           </h2>
-          <p className="mt-4 text-sm leading-relaxed text-white/60 sm:text-base">
+
+          <p className="mt-5 text-base leading-relaxed text-white/70 sm:text-lg">
             Everything you need to give, serve and grow together, all in one
             place for Jashore.
           </p>
-        </Reveal>
-
-        {/* Feature grid */}
-        <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:mt-14 lg:grid-cols-3 lg:gap-6">
-          {FEATURES.map((feature, index) => (
-            <Reveal key={feature.title} delay={(index % 3) * 80}>
-              <FeatureCard feature={feature} />
-            </Reveal>
-          ))}
         </div>
 
-        {/* Closing call to action */}
-        <Reveal className="mt-16 sm:mt-20">
-          <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/[0.04] px-6 py-12 text-center sm:px-12 sm:py-14">
-            {/* Teal accent line along the top edge */}
-            <div
-              aria-hidden="true"
-              className="animate-hero-sweep absolute inset-x-0 top-0 h-0.5 bg-gradient-to-r from-transparent via-[#3ec2b4] to-transparent"
-            />
-            <h3 className="text-2xl font-bold tracking-tight text-white sm:text-3xl">
-              Ready to make a difference?
-            </h3>
-            <p className="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-white/60 sm:text-base">
-              Whether you have an hour to spare or a skill to share, there is a
-              place for you in the Jashore community.
-            </p>
-            <div className="mt-7 flex flex-wrap items-center justify-center gap-3 sm:gap-4">
-              <Button
-                variant="brand"
-                size="lg"
-                render={<Link href="/contact" />}
-                className="group h-11 gap-2 rounded-full px-6 text-[0.95rem] shadow-lg shadow-[#ff6b5b]/30 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-[#ff6b5b]/45 active:translate-y-0"
-              >
-                Get Involved
-                <ArrowRightIcon
-                  aria-hidden="true"
-                  className="transition-transform duration-300 group-hover:translate-x-1"
-                />
-              </Button>
+        {/* Feature cards */}
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {features.map((feature) => {
+            const Icon = feature.icon;
 
-              <Button
-                variant="outline"
-                size="lg"
-                render={<Link href="/events" />}
-                className="group h-11 gap-2 rounded-full border-white/45 bg-white/10 px-6 text-[0.95rem] text-white backdrop-blur-md transition-all duration-300 hover:-translate-y-0.5 hover:border-white/80 hover:bg-white/20 hover:text-white hover:shadow-lg hover:shadow-black/25 focus-visible:border-white/70 focus-visible:ring-white/40 active:translate-y-0 dark:border-white/25"
+            return (
+              <Card
+                key={feature.title}
+                className="group relative isolate h-full overflow-hidden rounded-2xl border border-white/40 bg-[#D5F1EE] p-6 shadow-lg shadow-black/10 transition-all duration-300 hover:-translate-y-2 hover:border-transparent hover:shadow-[0_0_30px_rgba(139,92,246,0.35)] sm:p-8"
               >
-                Browse Events
-                <ArrowRightIcon
+                {/* RGB lighting */}
+                <div
                   aria-hidden="true"
-                  className="transition-transform duration-300 group-hover:translate-x-1"
+                  className="pointer-events-none absolute -inset-px -z-10 rounded-2xl bg-gradient-to-r from-purple-500 via-cyan-400 to-pink-500 opacity-0 blur-md transition-opacity duration-500 group-hover:opacity-100"
                 />
-              </Button>
-            </div>
-          </div>
-        </Reveal>
+
+                {/* Card background */}
+                <div
+                  aria-hidden="true"
+                  className="pointer-events-none absolute inset-px -z-10 rounded-2xl bg-[#D5F1EE]"
+                />
+
+                {/* Icon */}
+                <CardHeader className="p-0">
+                  <div
+                    className={`flex size-14 items-center justify-center rounded-xl border border-black/5 bg-white/70 transition-all duration-300 group-hover:scale-110 group-hover:bg-white ${feature.color}`}
+                  >
+                    <Icon className="size-7" />
+                  </div>
+
+                  <CardTitle className="mt-6 text-xl font-semibold text-[#123B39]">
+                    {feature.title}
+                  </CardTitle>
+                </CardHeader>
+
+                {/* Description */}
+                <CardContent className="mt-3 p-0">
+                  <p className="text-sm leading-7 text-[#496967] transition-colors duration-300 group-hover:text-[#123B39]">
+                    {feature.description}
+                  </p>
+                </CardContent>
+              </Card>
+            );
+          })}
+        </div>
       </div>
     </section>
   );
