@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { Oswald } from "next/font/google";
 import "./globals.css";
-import { Navbar } from "@/components/navbar";
+import { Navbar } from "@/components/home/navbar";
+import Footer from "@/components/home/footer";
 import { AuthProvider } from "@/lib/auth";
-import { themeInitScript } from "@/lib/theme-script";
 
 const oswaid = Oswald({
   subsets: ["latin"],
@@ -27,14 +27,14 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     >
       <head>
         {/* Applies the saved light/dark theme before the first paint. */}
-        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+        {/* <script dangerouslySetInnerHTML={{ __html: themeInitScript }} /> */}
       </head>
       <body className="min-h-full flex flex-col">
         <AuthProvider>
-          <Navbar />
           <main className="flex flex-1 flex-col">
-            {/* <platform-features/> */}
+            <Navbar />
             {children}
+            <Footer />
           </main>
         </AuthProvider>
       </body>

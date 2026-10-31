@@ -59,7 +59,7 @@ function useCountUp(target: number, duration = 1800) {
         };
         frame = requestAnimationFrame(tick);
       },
-      { threshold: 0.4 }
+      { threshold: 0.4 },
     );
 
     observer.observe(el);
@@ -84,13 +84,13 @@ function StatCell({ stat, index }: { stat: Stat; index: number }) {
         index < 2 && "border-b border-white/10 lg:border-b-0",
         // Desktop (4 cols): divider after every cell except the last.
         "lg:border-r lg:border-white/10",
-        index === STATS.length - 1 && "lg:border-r-0"
+        index === STATS.length - 1 && "lg:border-r-0",
       )}
     >
       <span
         className={cn(
           "block text-3xl font-bold tracking-tight transition-transform duration-300 ease-out group-hover:-translate-y-1 sm:text-4xl",
-          ACCENT_CLASS[stat.accent]
+          ACCENT_CLASS[stat.accent],
         )}
       >
         <span ref={numberRef} className="tabular-nums">
@@ -131,9 +131,7 @@ export function HeroBanner() {
 
       {/* Copy */}
       <div className="mx-auto flex w-full max-w-7xl flex-1 flex-col justify-center px-4 pt-16 sm:px-6 sm:pt-20 lg:px-8">
-        <p
-          className="animate-hero-fade-up flex items-center gap-2.5 text-xs font-semibold tracking-[0.2em] text-white/90 sm:text-sm [animation-delay:60ms]"
-        >
+        <p className="animate-hero-fade-up flex items-center gap-2.5 text-xs font-semibold tracking-[0.2em] text-white/90 sm:text-sm [animation-delay:60ms]">
           <span className="relative flex size-2.5 shrink-0" aria-hidden="true">
             <span className="animate-hero-dot-ping absolute inline-flex size-full rounded-full bg-[#ff6b5b]" />
             <span className="relative inline-flex size-2.5 rounded-full bg-[#ff6b5b]" />

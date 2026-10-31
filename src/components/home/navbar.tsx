@@ -26,7 +26,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { ThemeToggle } from "@/components/theme-toggle";
+// import { ThemeToggle } from "../providers/theme-provider";
+// import { ThemeToggle } from "@/components/home/theme-toggle";
 
 type NavLink = {
   href: string;
@@ -36,7 +37,8 @@ type NavLink = {
 const NAV_LINKS: NavLink[] = [
   { href: "/", label: "Home" },
   { href: "/features", label: "Features" },
-  { href: "/events/upcoming", label: "Upcoming Events" },
+  { href: "/events/upcoming", label: "▦ Upcoming Events" },
+
   { href: "/events", label: "All Events" },
   { href: "/about", label: "About Us" },
   { href: "/contact", label: "Contact Us" },
@@ -86,7 +88,7 @@ function NavItem({
           ? "bg-[#2aa79b]/10 text-foreground"
           : isActive
             ? "text-foreground"
-            : "text-muted-foreground hover:bg-muted/70 hover:text-foreground"
+            : "text-muted-foreground hover:bg-muted/70 hover:text-foreground",
       )}
     >
       {label}
@@ -95,7 +97,7 @@ function NavItem({
           aria-hidden="true"
           className={cn(
             "absolute inset-x-3 bottom-0.5 h-0.5 rounded-full bg-[#2aa79b] transition-all duration-300 ease-out",
-            isActive ? "scale-x-100 opacity-100" : "scale-x-0 opacity-0"
+            isActive ? "scale-x-100 opacity-100" : "scale-x-0 opacity-0",
           )}
         />
       )}
@@ -156,10 +158,7 @@ function ProfileMenu({ onNavigate }: { onNavigate?: () => void }) {
           <UserIcon aria-hidden="true" />
           My Profile
         </DropdownMenuItem>
-        <DropdownMenuItem
-          render={<Link href="/events" />}
-          onClick={onNavigate}
-        >
+        <DropdownMenuItem render={<Link href="/events" />} onClick={onNavigate}>
           <CalendarIcon aria-hidden="true" />
           My Events
         </DropdownMenuItem>
@@ -213,7 +212,7 @@ export function Navbar() {
         "sticky top-0 z-50 w-full border-b backdrop-blur-md transition-all duration-300 ease-out",
         scrolled
           ? "border-border/70 bg-background/85 shadow-xs"
-          : "border-transparent bg-background/70"
+          : "border-transparent bg-background/70",
       )}
     >
       <div className="mx-auto grid h-16 w-full max-w-7xl grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-3 px-4 sm:px-6 lg:px-8">
@@ -233,18 +232,12 @@ export function Navbar() {
           className="hidden items-center gap-1 justify-self-center lg:flex"
         >
           {NAV_LINKS.map((link) => (
-            <NavItem
-              key={link.href}
-              {...link}
-              isActive={isActive(link.href)}
-            />
+            <NavItem key={link.href} {...link} isActive={isActive(link.href)} />
           ))}
         </nav>
 
         {/* Right: actions */}
         <div className="flex shrink-0 items-center gap-1.5 justify-self-end sm:gap-2">
-          <ThemeToggle />
-
           {user ? (
             <ProfileMenu onNavigate={closeMobileMenu} />
           ) : (
@@ -273,9 +266,15 @@ export function Navbar() {
             onClick={() => setMobileOpen((open) => !open)}
           >
             {mobileOpen ? (
-              <XIcon aria-hidden="true" className="transition-transform duration-200" />
+              <XIcon
+                aria-hidden="true"
+                className="transition-transform duration-200"
+              />
             ) : (
-              <MenuIcon aria-hidden="true" className="transition-transform duration-200" />
+              <MenuIcon
+                aria-hidden="true"
+                className="transition-transform duration-200"
+              />
             )}
           </Button>
         </div>
@@ -287,9 +286,7 @@ export function Navbar() {
         inert={mobileOpen ? undefined : true}
         className={cn(
           "overflow-hidden bg-background/95 transition-[max-height,opacity] duration-300 ease-out lg:hidden",
-          mobileOpen
-            ? "max-h-[26rem] opacity-100"
-            : "max-h-0 opacity-0"
+          mobileOpen ? "max-h-[26rem] opacity-100" : "max-h-0 opacity-0",
         )}
       >
         <nav

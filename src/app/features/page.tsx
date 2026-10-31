@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { PlatformFeatures } from "@/components/platform-features";
+import { PlatformFeatures } from "@/components/home/platform-features";
 
 export const metadata: Metadata = {
   title: "Platform Features",
