@@ -79,16 +79,19 @@ export default function CreateEventPage() {
     setSuccess(false);
 
     try {
-      const res = await fetch("http://localhost:8000/create-event", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+      const res = await fetch(
+        `${process.env.Next_PUBLIC_API_URL}create-event`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            ...formData,
+            category: selectedCategory,
+          }),
         },
-        body: JSON.stringify({
-          ...formData,
-          category: selectedCategory,
-        }),
-      });
+      );
 
       const data = await res.json().catch(() => ({}));
 
