@@ -10,6 +10,7 @@ import {
   LogInIcon,
   LogOutIcon,
   MenuIcon,
+  Plus,
   SettingsIcon,
   UserIcon,
   XIcon,
@@ -37,10 +38,10 @@ type NavLink = {
 const NAV_LINKS: NavLink[] = [
   { href: "/", label: "Home" },
   { href: "/features", label: "Features" },
-  { href: "/events/upcoming", label: "▦ Upcoming Events" },
+  { href: "/upcoming", label: "▦ Upcoming Events" },
 
   { href: "/events", label: "All Events" },
-  { href: "/about", label: "About Us" },
+  { href: "/create-event", label: "Create Event" },
   { href: "/contact", label: "Contact Us" },
 ];
 
@@ -152,22 +153,22 @@ function ProfileMenu({ onNavigate }: { onNavigate?: () => void }) {
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem
-          render={<Link href="/profile" />}
+          render={<Link href="/create-event" />}
           onClick={onNavigate}
         >
-          <UserIcon aria-hidden="true" />
-          My Profile
+          <Plus aria-hidden="true" />
+          Create Event
         </DropdownMenuItem>
-        <DropdownMenuItem render={<Link href="/events" />} onClick={onNavigate}>
-          <CalendarIcon aria-hidden="true" />
-          My Events
+        <DropdownMenuItem render={<Link href="/event" />} onClick={onNavigate}>
+          <SettingsIcon aria-hidden="true" />
+          Manage Events
         </DropdownMenuItem>
         <DropdownMenuItem
           render={<Link href="/settings" />}
           onClick={onNavigate}
         >
-          <SettingsIcon aria-hidden="true" />
-          Settings
+          <CalendarIcon aria-hidden="true" />
+          Joined Events
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem variant="destructive" onClick={logout}>
