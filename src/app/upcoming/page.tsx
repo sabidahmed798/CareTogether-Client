@@ -20,12 +20,13 @@ const UpcomingEventPage = async () => {
   let events: IEvent[] = [];
 
   try {
-    const res = await fetch(
-      `${process.env.Next_PUBLIC_API_URL}/upcoming-event`,
-      {
-        cache: "no-store",
-      },
+    const apiUrl = (process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000").replace(
+      /\/+$/,
+      "",
     );
+    const res = await fetch(`${apiUrl}/upcoming-event`, {
+      cache: "no-store",
+    });
 
     if (!res.ok) {
       throw new Error("Failed to fetch upcoming events");

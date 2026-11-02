@@ -80,7 +80,7 @@ export default function CreateEventPage() {
 
     try {
       const res = await fetch(
-        `${process.env.Next_PUBLIC_API_URL}create-event`,
+        `${process.env.NEXT_PUBLIC_API_URL}create-event`,
         {
           method: "POST",
           headers: {
