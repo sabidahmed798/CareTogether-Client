@@ -18,33 +18,15 @@ import { toast } from "sonner";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
 
-/**
- * Event Interface
- * Represents an event object in the dashboard
- */
-interface IManagedEvent {
-  _id: string;
-  title: string;
-  category: string;
-  status: "Approved" | "Pending review";
-  date: string;
-  venue: string;
-  volunteersJoined: number;
-  thumbnail?: string;
-  description?: string;
-}
+// Extracted Edit/Delete dialogs (keeps this page shorter)
+import EditDialog, {
+  type IManagedEvent,
+  type EditForm,
+} from "@/components/dialog/Edit";
+import DeleteDialog from "@/components/dialog/Delete";
+
+// (IManagedEvent is now imported from @/components/dialog/EventDialogs)
 
 /**
  * Initial sample events matching the exact UI screenshot
@@ -111,7 +93,7 @@ export default function ManageEventsPage() {
   );
 
   // Form state for editing
-  const [editForm, setEditForm] = React.useState({
+  const [editForm, setEditForm] = React.useState<EditForm>({
     title: "",
     category: "",
     date: "",
@@ -389,158 +371,20 @@ export default function ManageEventsPage() {
         )}
 
         {/* ========================================================== */}
-        {/* EDIT EVENT DIALOG MODAL                                    */}
+        {/* EDIT & DELETE DIALOGS (extracted to components/dialog)     */}
         {/* ========================================================== */}
-        <Dialog
-          open={!!editEvent}
-          onOpenChange={(open) => !open && setEditEvent(null)}
-        >
-          <DialogContent className="max-w-md border border-[#204037] bg-white text-slate-900 sm:max-w-lg dark:bg-[#0c2621] dark:text-white">
-            <DialogHeader>
-              <DialogTitle className="text-lg font-bold">
-                Edit Event Details
-              </DialogTitle>
-              <DialogDescription className="text-xs text-slate-500 dark:text-slate-400">
-                Update the information for this community initiative.
-              </DialogDescription>
-            </DialogHeader>
-
-            <form onSubmit={handleSaveEdit} className="space-y-4 pt-2">
-              <div className="space-y-1.5">
-                <Label htmlFor="edit-title" className="text-xs font-semibold">
-                  Event Title
-                </Label>
-                <Input
-                  id="edit-title"
-                  required
-                  value={editForm.title}
-                  onChange={(e) =>
-                    setEditForm({ ...editForm, title: e.target.value })
-                  }
-                  className="h-10 text-sm"
-                />
-              </div>
-
-              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                <div className="space-y-1.5">
-                  <Label
-                    htmlFor="edit-category"
-                    className="text-xs font-semibold"
-                  >
-                    Category
-                  </Label>
-                  <Input
-                    id="edit-category"
-                    required
-                    value={editForm.category}
-                    onChange={(e) =>
-                      setEditForm({ ...editForm, category: e.target.value })
-                    }
-                    className="h-10 text-sm"
-                  />
-                </div>
-
-                <div className="space-y-1.5">
-                  <Label htmlFor="edit-date" className="text-xs font-semibold">
-                    Date
-                  </Label>
-                  <Input
-                    id="edit-date"
-                    required
-                    value={editForm.date}
-                    onChange={(e) =>
-                      setEditForm({ ...editForm, date: e.target.value })
-                    }
-                    className="h-10 text-sm"
-                  />
-                </div>
-              </div>
-
-              <div className="space-y-1.5">
-                <Label htmlFor="edit-venue" className="text-xs font-semibold">
-                  Location / Venue
-                </Label>
-                <Input
-                  id="edit-venue"
-                  required
-                  value={editForm.venue}
-                  onChange={(e) =>
-                    setEditForm({ ...editForm, venue: e.target.value })
-                  }
-                  className="h-10 text-sm"
-                />
-              </div>
-
-              <div className="space-y-1.5">
-                <Label htmlFor="edit-desc" className="text-xs font-semibold">
-                  Description
-                </Label>
-                <Textarea
-                  id="edit-desc"
-                  rows={3}
-                  value={editForm.description}
-                  onChange={(e) =>
-                    setEditForm({ ...editForm, description: e.target.value })
-                  }
-                  className="text-sm"
-                />
-              </div>
-
-              <DialogFooter className="pt-2">
-                <Button
-                  type="button"
-                  variant="ghost"
-                  onClick={() => setEditEvent(null)}
-                >
-                  Cancel
-                </Button>
-                <Button
-                  type="submit"
-                  className="rounded-full bg-[#1da599] font-bold text-white hover:bg-[#188c81]"
-                >
-                  Save Changes
-                </Button>
-              </DialogFooter>
-            </form>
-          </DialogContent>
-        </Dialog>
-
-        {/* ========================================================== */}
-        {/* DELETE CONFIRMATION MODAL                                  */}
-        {/* ========================================================== */}
-        <Dialog
-          open={!!deleteEvent}
-          onOpenChange={(open) => !open && setDeleteEvent(null)}
-        >
-          <DialogContent className="max-w-md border border-[#204037] bg-white text-slate-900 dark:bg-[#0c2621] dark:text-white">
-            <DialogHeader>
-              <DialogTitle className="text-lg font-bold text-red-600 dark:text-red-400">
-                Delete Event
-              </DialogTitle>
-              <DialogDescription className="text-xs text-slate-500 dark:text-slate-400">
-                Are you sure you want to delete &quot;{deleteEvent?.title}
-                &quot;? This action cannot be undone.
-              </DialogDescription>
-            </DialogHeader>
-
-            <DialogFooter className="pt-3">
-              <Button
-                type="button"
-                variant="ghost"
-                onClick={() => setDeleteEvent(null)}
-              >
-                Cancel
-              </Button>
-              <Button
-                type="button"
-                onClick={handleConfirmDelete}
-                className="rounded-full bg-red-600 font-bold text-white hover:bg-red-700"
-              >
-                Delete Event
-              </Button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
+        <EditDialog
+          editEvent={editEvent}
+          setEditEvent={setEditEvent}
+          editForm={editForm}
+          setEditForm={setEditForm}
+          onSaveEdit={handleSaveEdit}
+        />
+        <DeleteDialog
+          deleteEvent={deleteEvent}
+          setDeleteEvent={setDeleteEvent}
+          onConfirmDelete={handleConfirmDelete}
+        />
       </div>
     </main>
   );
