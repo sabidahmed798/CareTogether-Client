@@ -49,27 +49,6 @@ const YoutubeIcon = (props: React.SVGProps<SVGSVGElement>) => (
   </svg>
 );
 
-const Logo = () => (
-  <div className="flex items-center gap-2">
-    <svg width="42" height="42" viewBox="0 0 42 42" fill="none">
-      <circle cx="10" cy="6" r="4" fill="#f26b50" />
-      <circle cx="32" cy="6" r="4" fill="#1f9a8f" />
-      <path
-        d="M3 18c0-5 3.5-8 7-8s7 3 7 8c0 7-7 14-7 14S3 25 3 18z"
-        fill="#f26b50"
-      />
-      <path
-        d="M39 18c0-5-3.5-8-7-8s-7 3-7 8c0 7 7 14 7 14s7-7 7-14z"
-        fill="#1f9a8f"
-      />
-    </svg>
-    <span className="text-base font-bold">
-      <span className="text-[#f26b50]">Care</span>{" "}
-      <span className="text-[#1f9a8f]">Together</span>
-    </span>
-  </div>
-);
-
 const exploreLinks = [
   { label: "Home", href: "/" },
   { label: "Features", href: "/features" },
@@ -92,7 +71,7 @@ const socials = [
 
 const Footer = () => {
   return (
-    <footer className="relative w-full bg-[#0f2623] text-white">
+    <footer className="relative w-full bg-slate-100/90 text-slate-800 transition-colors duration-300 dark:bg-[#0f2623] dark:text-white">
       {/* Top gradient line */}
       <div className="h-[3px] w-full bg-gradient-to-r from-[#e0553f] via-[#7a6a5c] to-[#1f9a8f]" />
 
@@ -109,7 +88,7 @@ const Footer = () => {
               className=""
               sizes="(max-width: 640px) 118px, 135px"
             />
-            <p className="mt-6 max-w-[270px] text-[15px] leading-7 text-white/70">
+            <p className="mt-6 max-w-[270px] text-[15px] leading-7 text-slate-600 dark:text-white/70">
               A community-driven platform bringing the people of Jashore
               together to support one another and build a better future.
             </p>
@@ -120,7 +99,7 @@ const Footer = () => {
                   key={label}
                   href={href}
                   aria-label={label}
-                  className="group flex h-[42px] w-[42px] items-center justify-center rounded-full bg-[#163732] text-[#2dd4bf] transition-all duration-300 hover:-translate-y-1 hover:bg-[#1f9a8f] hover:text-white hover:shadow-[0_0_18px_rgba(45,212,191,0.5)]"
+                  className="group flex h-[42px] w-[42px] items-center justify-center rounded-full border border-slate-300/80 bg-white text-teal-600 transition-all duration-300 hover:-translate-y-1 hover:bg-[#1f9a8f] hover:text-white hover:shadow-[0_0_18px_rgba(45,212,191,0.5)] dark:border-transparent dark:bg-[#163732] dark:text-[#2dd4bf] dark:hover:bg-[#1f9a8f] dark:hover:text-white"
                 >
                   <Icon className="h-5 w-5" />
                 </a>
@@ -130,13 +109,13 @@ const Footer = () => {
 
           {/* Explore */}
           <div>
-            <h4 className="text-base font-bold">Explore</h4>
+            <h4 className="text-base font-bold text-slate-900 dark:text-white">Explore</h4>
             <ul className="mt-5 space-y-3">
               {exploreLinks.map((l) => (
                 <li key={l.label}>
                   <Link
                     href={l.href}
-                    className="text-[15px] text-white/70 transition-all duration-200 hover:pl-1 hover:text-[#2dd4bf]"
+                    className="text-[15px] text-slate-600 transition-all duration-200 hover:pl-1 hover:text-teal-600 dark:text-white/70 dark:hover:text-[#2dd4bf]"
                   >
                     {l.label}
                   </Link>
@@ -147,13 +126,13 @@ const Footer = () => {
 
           {/* Get Involved */}
           <div>
-            <h4 className="text-base font-bold">Get Involved</h4>
+            <h4 className="text-base font-bold text-slate-900 dark:text-white">Get Involved</h4>
             <ul className="mt-5 space-y-3">
               {involvedLinks.map((l) => (
                 <li key={l.label}>
                   <Link
                     href={l.href}
-                    className="text-[15px] text-white/70 transition-all duration-200 hover:pl-1 hover:text-[#2dd4bf]"
+                    className="text-[15px] text-slate-600 transition-all duration-200 hover:pl-1 hover:text-teal-600 dark:text-white/70 dark:hover:text-[#2dd4bf]"
                   >
                     {l.label}
                   </Link>
@@ -164,39 +143,39 @@ const Footer = () => {
 
           {/* Contact */}
           <div>
-            <h4 className="text-base font-bold">Contact</h4>
+            <h4 className="text-base font-bold text-slate-900 dark:text-white">Contact</h4>
             <ul className="mt-5 space-y-4">
-              <li className="flex items-start gap-3 text-[15px] text-white/70">
-                <Mail className="mt-0.5 h-5 w-5 shrink-0 text-[#2dd4bf]" />
+              <li className="flex items-start gap-3 text-[15px] text-slate-600 dark:text-white/70">
+                <Mail className="mt-0.5 h-5 w-5 shrink-0 text-teal-600 dark:text-[#2dd4bf]" />
                 <a
                   href="mailto:hello@caretogether.org"
-                  className="transition-colors hover:text-[#2dd4bf]"
+                  className="transition-colors hover:text-teal-600 dark:hover:text-[#2dd4bf]"
                 >
                   sabidahmed798.com
                 </a>
               </li>
-              <li className="flex items-start gap-3 text-[15px] leading-6 text-white/70">
-                <MapPin className="mt-0.5 h-5 w-5 shrink-0 text-[#2dd4bf]" />
+              <li className="flex items-start gap-3 text-[15px] leading-6 text-slate-600 dark:text-white/70">
+                <MapPin className="mt-0.5 h-5 w-5 shrink-0 text-teal-600 dark:text-[#2dd4bf]" />
                 <span>Jashore, Khulna Division, Bangladesh</span>
               </li>
             </ul>
           </div>
         </div>
 
-        <Separator className="mb-6 mt-12 bg-white/10" />
+        <Separator className="mb-6 mt-12 bg-slate-200 dark:bg-white/10" />
 
-        <div className="flex flex-col items-center justify-between gap-4 text-sm text-white/60 sm:flex-row">
+        <div className="flex flex-col items-center justify-between gap-4 text-sm text-slate-500 sm:flex-row dark:text-white/60">
           <p>© 2026 Care Together · Jashore. All rights reserved.</p>
           <div className="flex items-center gap-6">
             <Link
               href="/privacy"
-              className="transition-colors hover:text-[#2dd4bf]"
+              className="transition-colors hover:text-teal-600 dark:hover:text-[#2dd4bf]"
             >
               Privacy Policy
             </Link>
             <Link
               href="/terms"
-              className="transition-colors hover:text-[#2dd4bf]"
+              className="transition-colors hover:text-teal-600 dark:hover:text-[#2dd4bf]"
             >
               Terms of Use
             </Link>

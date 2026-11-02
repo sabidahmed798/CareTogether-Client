@@ -166,7 +166,7 @@ export function HeroBanner() {
           <Button
             variant="outline"
             size="lg"
-            render={<Link href="/events" />}
+            render={<Link href="/upcoming" />}
             className="group h-11 gap-2 rounded-full border-white/45 bg-white/10 px-6 text-[0.95rem] text-white backdrop-blur-md transition-all duration-300 hover:-translate-y-0.5 hover:border-white/80 hover:bg-white/20 hover:text-white hover:shadow-lg hover:shadow-black/25 focus-visible:border-white/70 focus-visible:ring-white/40 active:translate-y-0 dark:border-white/25"
           >
             Explore Initiatives

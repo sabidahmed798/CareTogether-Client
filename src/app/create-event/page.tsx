@@ -139,23 +139,23 @@ export default function CreateEventPage() {
   }
 
   return (
-    <main className="min-h-screen bg-[#071b18] px-4 py-8 text-white sm:px-6 lg:px-8">
+    <main className="min-h-screen bg-slate-50 px-4 py-8 text-slate-900 transition-colors duration-300 sm:px-6 lg:px-8 dark:bg-[#071b18] dark:text-white">
       <div className="mx-auto grid max-w-6xl grid-cols-1 items-start gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:gap-14">
         {/* Left Section */}
         <section className="flex flex-col gap-7 pt-1">
           <div>
             <div className="mb-5 flex items-center gap-2">
               <span className="h-px w-4 bg-[#e5483e]" />
-              <span className="text-[11px] font-bold uppercase tracking-[0.16em] text-[#9aaca7]">
+              <span className="text-[11px] font-bold uppercase tracking-[0.16em] text-teal-700 dark:text-[#9aaca7]">
                 Start something good
               </span>
             </div>
 
-            <h1 className="max-w-md text-3xl font-extrabold leading-[1.12] tracking-tight sm:text-4xl">
+            <h1 className="max-w-md text-3xl font-extrabold leading-[1.12] tracking-tight text-slate-900 sm:text-4xl dark:text-white">
               Create a Community Event
             </h1>
 
-            <p className="mt-4 max-w-md text-sm leading-6 text-[#a4b5b0]">
+            <p className="mt-4 max-w-md text-sm leading-6 text-slate-600 dark:text-[#a4b5b0]">
               Have an idea to help your neighbours? Organize a health camp,
               clean-up drive or learning session and invite volunteers from
               across Jashore.
@@ -167,7 +167,7 @@ export default function CreateEventPage() {
             {steps.map((step, index) => (
               <div key={step.title} className="flex items-start gap-3">
                 <div
-                  className={`flex size-7 shrink-0 items-center justify-center rounded-full text-xs font-bold ${
+                  className={`flex size-7 shrink-0 items-center justify-center rounded-full text-xs font-bold text-white ${
                     index === 1 ? "bg-[#149d91]" : "bg-[#e5483e]"
                   }`}
                 >
@@ -175,8 +175,10 @@ export default function CreateEventPage() {
                 </div>
 
                 <div>
-                  <h3 className="text-sm font-bold text-white">{step.title}</h3>
-                  <p className="mt-1 text-xs text-[#91a49e]">
+                  <h3 className="text-sm font-bold text-slate-900 dark:text-white">
+                    {step.title}
+                  </h3>
+                  <p className="mt-1 text-xs text-slate-600 dark:text-[#91a49e]">
                     {step.description}
                   </p>
                 </div>
@@ -185,7 +187,7 @@ export default function CreateEventPage() {
           </div>
 
           {/* Event Image */}
-          <div className="relative mt-1 h-48 w-full max-w-md overflow-hidden rounded-xl border border-[#24423c] bg-[#102c26]">
+          <div className="relative mt-1 h-48 w-full max-w-md overflow-hidden rounded-xl border border-slate-200 bg-slate-100 dark:border-[#24423c] dark:bg-[#102c26]">
             <Image
               src="/images/jessore.png"
               alt="Community event at a local campus in Jessore"
@@ -196,32 +198,32 @@ export default function CreateEventPage() {
               className="h-[400px] w-full object-cover"
             />
 
-            <div className="absolute inset-0 bg-gradient-to-t from-[#071b18]/50 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
 
-            <div className="absolute bottom-3 left-3 flex items-center gap-2 rounded-full bg-[#071b18]/80 px-3 py-1.5 text-xs font-medium text-white backdrop-blur">
+            <div className="absolute bottom-3 left-3 flex items-center gap-2 rounded-full bg-black/70 px-3 py-1.5 text-xs font-medium text-white backdrop-blur">
               <Sparkles className="size-3.5 text-[#f06a5e]" />
               Make a difference together
             </div>
           </div>
 
-          <div className="flex items-center gap-2 text-xs text-[#81968f]">
+          <div className="flex items-center gap-2 text-xs text-slate-500 dark:text-[#81968f]">
             <CheckCircle2 className="size-4 text-[#20a89a]" />
             Every small action creates a better community.
           </div>
         </section>
 
         {/* Right Section */}
-        <Card className="overflow-hidden rounded-2xl border border-[#23413b] border-t-2 border-t-[#e5483e] bg-[#0d2722] text-white shadow-2xl shadow-black/20">
+        <Card className="overflow-hidden rounded-2xl border border-slate-200 border-t-2 border-t-[#e5483e] bg-white text-slate-900 shadow-xl dark:border-[#23413b] dark:border-t-[#e5483e] dark:bg-[#0d2722] dark:text-white dark:shadow-2xl dark:shadow-black/20">
           <CardContent className="p-5 sm:p-7">
             <div className="mb-6 flex items-center justify-between">
               <div>
                 <h2 className="text-lg font-bold">Event details</h2>
-                <p className="mt-1 text-xs text-[#8fa49c]">
+                <p className="mt-1 text-xs text-slate-500 dark:text-[#8fa49c]">
                   Share your idea with the community.
                 </p>
               </div>
 
-              <div className="flex size-9 items-center justify-center rounded-full bg-[#183b33] text-[#26b5a5]">
+              <div className="flex size-9 items-center justify-center rounded-full bg-teal-50 text-teal-600 dark:bg-[#183b33] dark:text-[#26b5a5]">
                 <CalendarDays className="size-4" />
               </div>
             </div>
@@ -229,7 +231,7 @@ export default function CreateEventPage() {
             {success && (
               <div
                 role="status"
-                className="mb-5 flex items-center gap-2 rounded-lg border border-[#1d6b5a] bg-[#123b30] p-3 text-sm text-[#8de5c8]"
+                className="mb-5 flex items-center gap-2 rounded-lg border border-emerald-300 bg-emerald-50 p-3 text-sm text-emerald-800 dark:border-[#1d6b5a] dark:bg-[#123b30] dark:text-[#8de5c8]"
               >
                 <CheckCircle2 className="size-4 shrink-0" />
                 Your event has been created successfully!
@@ -250,7 +252,7 @@ export default function CreateEventPage() {
                   onChange={handleChange}
                   placeholder="e.g. Free Health Check-up Camp"
                   required
-                  className="h-10 border-[#29443e] bg-[#071b18] text-sm placeholder:text-[#647c73] focus-visible:ring-[#20a89a]"
+                  className="h-10 border-slate-300 bg-slate-50/50 text-sm text-slate-900 placeholder:text-slate-400 focus-visible:ring-teal-500 dark:border-[#29443e] dark:bg-[#071b18] dark:text-white dark:placeholder:text-[#647c73] dark:focus-visible:ring-[#20a89a]"
                 />
               </div>
 
@@ -271,7 +273,7 @@ export default function CreateEventPage() {
                         className={`flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-medium transition-colors ${
                           isSelected
                             ? "border-[#159d90] bg-[#159d90] text-white"
-                            : "border-[#29443e] bg-[#071b18] text-[#c0d0ca] hover:border-[#159d90] hover:text-white"
+                            : "border-slate-200 bg-slate-50 text-slate-700 hover:border-[#159d90] hover:text-[#159d90] dark:border-[#29443e] dark:bg-[#071b18] dark:text-[#c0d0ca] dark:hover:border-[#159d90] dark:hover:text-white"
                         }`}
                       >
                         {isSelected && <Check className="size-3" />}
@@ -297,7 +299,7 @@ export default function CreateEventPage() {
                     onChange={handleChange}
                     required
                     min={new Date().toISOString().split("T")[0]}
-                    className="h-10 border-[#29443e] bg-[#071b18] text-sm text-white [color-scheme:dark] focus-visible:ring-[#20a89a]"
+                    className="h-10 border-slate-300 bg-slate-50/50 text-sm text-slate-900 focus-visible:ring-teal-500 dark:border-[#29443e] dark:bg-[#071b18] dark:text-white dark:[color-scheme:dark] dark:focus-visible:ring-[#20a89a]"
                   />
                 </div>
 
@@ -307,7 +309,7 @@ export default function CreateEventPage() {
                   </Label>
 
                   <div className="relative">
-                    <MapPin className="absolute left-3 top-3 size-4 text-[#6f8980]" />
+                    <MapPin className="absolute left-3 top-3 size-4 text-slate-400 dark:text-[#6f8980]" />
 
                     <Input
                       id="venue"
@@ -316,7 +318,7 @@ export default function CreateEventPage() {
                       onChange={handleChange}
                       placeholder="Venue, area, Jashore"
                       required
-                      className="h-10 border-[#29443e] bg-[#071b18] pl-9 text-sm placeholder:text-[#647c73] focus-visible:ring-[#20a89a]"
+                      className="h-10 border-slate-300 bg-slate-50/50 pl-9 text-sm text-slate-900 placeholder:text-slate-400 focus-visible:ring-teal-500 dark:border-[#29443e] dark:bg-[#071b18] dark:text-white dark:placeholder:text-[#647c73] dark:focus-visible:ring-[#20a89a]"
                     />
                   </div>
                 </div>
@@ -335,11 +337,11 @@ export default function CreateEventPage() {
                   value={formData.thumbnail}
                   onChange={handleChange}
                   placeholder="https://example.com/event-photo.jpg"
-                  className="h-10 border-[#29443e] bg-[#071b18] text-sm placeholder:text-[#647c73] focus-visible:ring-[#20a89a]"
+                  className="h-10 border-slate-300 bg-slate-50/50 text-sm text-slate-900 placeholder:text-slate-400 focus-visible:ring-teal-500 dark:border-[#29443e] dark:bg-[#071b18] dark:text-white dark:placeholder:text-[#647c73] dark:focus-visible:ring-[#20a89a]"
                 />
 
                 {thumbnailPreview && (
-                  <div className="relative mt-2 h-32 w-full overflow-hidden rounded-lg border border-[#29443e] bg-[#071b18]">
+                  <div className="relative mt-2 h-32 w-full overflow-hidden rounded-lg border border-slate-200 bg-slate-100 dark:border-[#29443e] dark:bg-[#071b18]">
                     <img
                       src={thumbnailPreview}
                       alt="Event thumbnail preview"
@@ -364,7 +366,7 @@ export default function CreateEventPage() {
                   placeholder="What will happen, and who can join?"
                   required
                   minLength={10}
-                  className="min-h-32 resize-y border-[#29443e] bg-[#071b18] text-sm placeholder:text-[#647c73] focus-visible:ring-[#20a89a]"
+                  className="min-h-32 resize-y border-slate-300 bg-slate-50/50 text-sm text-slate-900 placeholder:text-slate-400 focus-visible:ring-teal-500 dark:border-[#29443e] dark:bg-[#071b18] dark:text-white dark:placeholder:text-[#647c73] dark:focus-visible:ring-[#20a89a]"
                 />
               </div>
 
@@ -382,7 +384,7 @@ export default function CreateEventPage() {
                   onChange={handleChange}
                   placeholder="you@example.com"
                   required
-                  className="h-10 border-[#29443e] bg-[#071b18] text-sm placeholder:text-[#647c73] focus-visible:ring-[#20a89a]"
+                  className="h-10 border-slate-300 bg-slate-50/50 text-sm text-slate-900 placeholder:text-slate-400 focus-visible:ring-teal-500 dark:border-[#29443e] dark:bg-[#071b18] dark:text-white dark:placeholder:text-[#647c73] dark:focus-visible:ring-[#20a89a]"
                 />
               </div>
 
@@ -402,7 +404,7 @@ export default function CreateEventPage() {
                 )}
               </Button>
 
-              <p className="text-center text-xs text-[#81968f]">
+              <p className="text-center text-xs text-slate-500 dark:text-[#81968f]">
                 Your event will be reviewed before going live.
               </p>
             </form>

@@ -15,6 +15,7 @@ import {
   UserIcon,
   XIcon,
 } from "lucide-react";
+
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/lib/auth";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
@@ -27,8 +28,9 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-// import { ThemeToggle } from "../providers/theme-provider";
-// import { ThemeToggle } from "@/components/home/theme-toggle";
+
+// Theme Toggle Import
+import { ThemeToggle } from "@/components/home/theme-toggle";
 
 type NavLink = {
   href: string;
@@ -39,13 +41,12 @@ const NAV_LINKS: NavLink[] = [
   { href: "/", label: "Home" },
   { href: "/features", label: "Features" },
   { href: "/upcoming", label: "▦ Upcoming Events" },
-
   { href: "/events", label: "All Events" },
   { href: "/create-event", label: "Create Event" },
   { href: "/contact", label: "Contact Us" },
 ];
 
-/** Brand mark + wordmark, from `public/images`. */
+/** Brand Logo */
 function Logo() {
   return (
     <span className="flex h-7 w-auto items-center transition-transform duration-300 ease-out group-hover:scale-105 sm:h-8">
@@ -62,6 +63,7 @@ function Logo() {
   );
 }
 
+/** Navigation Item */
 function NavItem({
   href,
   label,
@@ -93,6 +95,7 @@ function NavItem({
       )}
     >
       {label}
+
       {!isMobile && (
         <span
           aria-hidden="true"
@@ -106,6 +109,7 @@ function NavItem({
   );
 }
 
+/** User Profile Menu */
 function ProfileMenu({ onNavigate }: { onNavigate?: () => void }) {
   const { user, logout } = useAuth();
 
@@ -127,9 +131,11 @@ function ProfileMenu({ onNavigate }: { onNavigate?: () => void }) {
                 {user.initials}
               </AvatarFallback>
             </Avatar>
+
             <span className="hidden text-sm font-medium md:inline">
               {firstName}
             </span>
+
             <ChevronDownIcon
               aria-hidden="true"
               className="size-3.5 text-muted-foreground transition-transform duration-200 ease-out group-data-popup-open/button:rotate-180"
@@ -137,21 +143,26 @@ function ProfileMenu({ onNavigate }: { onNavigate?: () => void }) {
           </Button>
         }
       />
+
       <DropdownMenuContent align="end" className="w-64">
         <DropdownMenuLabel className="px-2 py-2 font-normal">
           <span className="flex flex-col gap-0.5">
             <span className="text-sm font-medium text-foreground">
               {user.name}
             </span>
+
             <span className="truncate text-xs text-muted-foreground">
               {user.email}
             </span>
+
             <span className="mt-1 inline-flex w-fit rounded-full bg-[#2aa79b]/10 px-2 py-0.5 text-[0.7rem] font-medium text-[#149c8e] dark:text-[#3ec2b4]">
               {user.role}
             </span>
           </span>
         </DropdownMenuLabel>
+
         <DropdownMenuSeparator />
+
         <DropdownMenuItem
           render={<Link href="/create-event" />}
           onClick={onNavigate}
@@ -159,10 +170,12 @@ function ProfileMenu({ onNavigate }: { onNavigate?: () => void }) {
           <Plus aria-hidden="true" />
           Create Event
         </DropdownMenuItem>
+
         <DropdownMenuItem render={<Link href="/event" />} onClick={onNavigate}>
           <SettingsIcon aria-hidden="true" />
           Manage Events
         </DropdownMenuItem>
+
         <DropdownMenuItem
           render={<Link href="/settings" />}
           onClick={onNavigate}
@@ -170,7 +183,9 @@ function ProfileMenu({ onNavigate }: { onNavigate?: () => void }) {
           <CalendarIcon aria-hidden="true" />
           Joined Events
         </DropdownMenuItem>
+
         <DropdownMenuSeparator />
+
         <DropdownMenuItem variant="destructive" onClick={logout}>
           <LogOutIcon aria-hidden="true" />
           Log out
@@ -180,25 +195,33 @@ function ProfileMenu({ onNavigate }: { onNavigate?: () => void }) {
   );
 }
 
+/** Main Navbar */
 export function Navbar() {
   const pathname = usePathname();
   const { user, login } = useAuth();
+
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [scrolled, setScrolled] = React.useState(false);
 
   React.useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 4);
+
     onScroll();
+
     window.addEventListener("scroll", onScroll, { passive: true });
+
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   React.useEffect(() => {
     if (!mobileOpen) return;
+
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") setMobileOpen(false);
     };
+
     window.addEventListener("keydown", onKeyDown);
+
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [mobileOpen]);
 
@@ -217,7 +240,7 @@ export function Navbar() {
       )}
     >
       <div className="mx-auto grid h-16 w-full max-w-7xl grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-3 px-4 sm:px-6 lg:px-8">
-        {/* Left: logo + brand */}
+        {/* Left: Logo */}
         <Link
           href="/"
           onClick={closeMobileMenu}
@@ -227,7 +250,7 @@ export function Navbar() {
           <Logo />
         </Link>
 
-        {/* Center: primary navigation (desktop) */}
+        {/* Center: Desktop Navigation */}
         <nav
           aria-label="Primary"
           className="hidden items-center gap-1 justify-self-center lg:flex"
@@ -237,8 +260,11 @@ export function Navbar() {
           ))}
         </nav>
 
-        {/* Right: actions */}
+        {/* Right: Actions */}
         <div className="flex shrink-0 items-center gap-1.5 justify-self-end sm:gap-2">
+          {/* Dark / Light Theme Toggle */}
+          <ThemeToggle />
+
           {user ? (
             <ProfileMenu onNavigate={closeMobileMenu} />
           ) : (
@@ -256,7 +282,7 @@ export function Navbar() {
             </Button>
           )}
 
-          {/* Mobile hamburger */}
+          {/* Mobile Hamburger */}
           <Button
             variant="ghost"
             size="icon"
@@ -281,13 +307,13 @@ export function Navbar() {
         </div>
       </div>
 
-      {/* Mobile menu panel */}
+      {/* Mobile Menu Panel */}
       <div
         id="mobile-menu"
         inert={mobileOpen ? undefined : true}
         className={cn(
-          "overflow-hidden bg-background/95 transition-[max-height,opacity] duration-300 ease-out lg:hidden",
-          mobileOpen ? "max-h-[26rem] opacity-100" : "max-h-0 opacity-0",
+          "overflow-hidden bg-background/95 backdrop-blur-md transition-[max-height,opacity] duration-300 ease-out lg:hidden",
+          mobileOpen ? "max-h-[32rem] opacity-100" : "max-h-0 opacity-0",
         )}
       >
         <nav
@@ -303,6 +329,13 @@ export function Navbar() {
               variant="mobile"
             />
           ))}
+
+          <div className="mt-2 flex items-center justify-between border-t border-border/60 px-4 pt-3">
+            <span className="text-sm font-medium text-muted-foreground">
+              Theme Mode
+            </span>
+            <ThemeToggle showLabel className="h-9 px-3" />
+          </div>
         </nav>
       </div>
     </header>

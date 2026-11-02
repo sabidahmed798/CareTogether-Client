@@ -50,7 +50,7 @@ const YoutubeIcon = (props: React.SVGProps<SVGSVGElement>) => (
 
 const JoinOur = () => {
   return (
-    <section className="w-full bg-[#0b1a17] px-4 py-10 md:px-10 md:py-16">
+    <section className="w-full bg-slate-100/70 px-4 py-10 transition-colors duration-300 md:px-10 md:py-16 dark:bg-[#0b1a17]">
       <style>{`
         @keyframes rgb-glow {
           0%   { box-shadow: 0 0 20px 2px rgba(255, 0, 80, 0.55); }
@@ -75,7 +75,7 @@ const JoinOur = () => {
         }
       `}</style>
 
-      <div className="relative mx-auto max-w-6xl overflow-hidden rounded-[28px] bg-gradient-to-br from-[#0a3a33] via-[#07302b] to-[#06302a] p-8 md:p-16">
+      <div className="relative mx-auto max-w-6xl overflow-hidden rounded-[28px] border border-teal-900/10 bg-gradient-to-br from-[#0a3a33] via-[#07302b] to-[#06302a] p-8 shadow-xl md:p-16 dark:border-white/10 dark:shadow-none">
         {/* Background glows */}
         <div className="pointer-events-none absolute -right-20 -top-20 h-80 w-80 rounded-full bg-[#6b4a3f]/50 blur-3xl" />
         <div className="pointer-events-none absolute -bottom-24 -left-16 h-80 w-80 rounded-full bg-[#14584f]/70 blur-3xl" />
