@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import Image from "next/image";
@@ -79,19 +79,20 @@ export default function CreateEventPage() {
     setSuccess(false);
 
     try {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}create-event`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            ...formData,
-            category: selectedCategory,
-          }),
+      const apiUrl = (
+        process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000"
+      ).replace(/\/+$/, "");
+
+      const res = await fetch(`${apiUrl}/upcoming-event`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
         },
-      );
+        body: JSON.stringify({
+          ...formData,
+          category: selectedCategory,
+        }),
+      });
 
       const data = await res.json().catch(() => ({}));
 
