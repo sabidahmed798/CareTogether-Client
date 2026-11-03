@@ -3,7 +3,7 @@
 import * as React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import {
   CalendarIcon,
   ChevronDownIcon,
@@ -12,12 +12,11 @@ import {
   MenuIcon,
   Plus,
   SettingsIcon,
-  UserIcon,
   XIcon,
 } from "lucide-react";
 
 import { cn } from "@/lib/utils";
-import { useAuth } from "@/lib/auth";
+import { authClient } from "@/lib/auth-client";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -29,7 +28,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-// Theme Toggle Import
 import { ThemeToggle } from "@/components/home/theme-toggle";
 
 type NavLink = {
@@ -47,7 +45,7 @@ const NAV_LINKS: NavLink[] = [
   { href: "/contact", label: "Contact Us" },
 ];
 
-/** Brand Logo */
+// Brand Logo
 function Logo() {
   return (
     <span className="flex h-7 w-auto items-center transition-transform duration-300 ease-out group-hover:scale-105 sm:h-8">
@@ -64,7 +62,7 @@ function Logo() {
   );
 }
 
-/** Navigation Item */
+// Navigation Item
 function NavItem({
   href,
   label,
@@ -110,13 +108,30 @@ function NavItem({
   );
 }
 
-/** User Profile Menu */
-function ProfileMenu({ onNavigate }: { onNavigate?: () => void }) {
-  const { user, logout } = useAuth();
-
-  if (!user) return null;
-
+// User Profile Menu
+function ProfileMenu({
+  onNavigate,
+  user,
+}: {
+  onNavigate?: () => void;
+  user: {
+    name: string;
+    email: string;
+    role?: string;
+  };
+}) {
   const firstName = user.name.split(" ")[0];
+
+  const initials = user.name
+    .split(" ")
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((name) => name.charAt(0).toUpperCase())
+    .join("");
+
+  const handleLogout = async () => {
+    await authClient.signOut();
+  };
 
   return (
     <DropdownMenu>
@@ -129,7 +144,7 @@ function ProfileMenu({ onNavigate }: { onNavigate?: () => void }) {
           >
             <Avatar size="sm">
               <AvatarFallback className="bg-[#2aa79b]/15 font-medium text-[#149c8e] dark:text-[#3ec2b4]">
-                {user.initials}
+                {initials || "U"}
               </AvatarFallback>
             </Avatar>
 
@@ -157,7 +172,7 @@ function ProfileMenu({ onNavigate }: { onNavigate?: () => void }) {
             </span>
 
             <span className="mt-1 inline-flex w-fit rounded-full bg-[#2aa79b]/10 px-2 py-0.5 text-[0.7rem] font-medium text-[#149c8e] dark:text-[#3ec2b4]">
-              {user.role}
+              {user.role || "Member"}
             </span>
           </span>
         </DropdownMenuLabel>
@@ -187,7 +202,7 @@ function ProfileMenu({ onNavigate }: { onNavigate?: () => void }) {
 
         <DropdownMenuSeparator />
 
-        <DropdownMenuItem variant="destructive" onClick={logout}>
+        <DropdownMenuItem variant="destructive" onClick={handleLogout}>
           <LogOutIcon aria-hidden="true" />
           Log out
         </DropdownMenuItem>
@@ -196,10 +211,15 @@ function ProfileMenu({ onNavigate }: { onNavigate?: () => void }) {
   );
 }
 
-/** Main Navbar */
+// Main Navbar
 export function Navbar() {
   const pathname = usePathname();
-  const { user, login } = useAuth();
+  const router = useRouter();
+
+  // Better Auth Session
+  const { data: session, isPending } = authClient.useSession();
+
+  const user = session?.user;
 
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [scrolled, setScrolled] = React.useState(false);
@@ -230,6 +250,10 @@ export function Navbar() {
     href === "/" ? pathname === "/" : pathname === href;
 
   const closeMobileMenu = () => setMobileOpen(false);
+
+  const handleLogin = () => {
+    router.push("/login");
+  };
 
   return (
     <header
@@ -266,12 +290,23 @@ export function Navbar() {
           {/* Dark / Light Theme Toggle */}
           <ThemeToggle />
 
-          {user ? (
-            <ProfileMenu onNavigate={closeMobileMenu} />
+          {isPending ? (
+            <Button variant="ghost" disabled className="h-9">
+              Loading...
+            </Button>
+          ) : user ? (
+            <ProfileMenu
+              user={{
+                name: user.name,
+                email: user.email,
+                role: (user as typeof user & { role?: string }).role,
+              }}
+              onNavigate={closeMobileMenu}
+            />
           ) : (
             <Button
               variant="brand"
-              onClick={login}
+              onClick={handleLogin}
               className="group h-9 gap-1.5 px-3 sm:px-4"
               aria-label="Log in to your account"
             >
@@ -335,6 +370,7 @@ export function Navbar() {
             <span className="text-sm font-medium text-muted-foreground">
               Theme Mode
             </span>
+
             <ThemeToggle showLabel className="h-9 px-3" />
           </div>
         </nav>

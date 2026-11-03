@@ -4,7 +4,7 @@ import { Oswald } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/home/navbar";
 import Footer from "@/components/home/footer";
-import { AuthProvider } from "@/lib/auth";
+// import { AuthProvider } from "@/lib/auth";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 
 const oswaid = Oswald({
@@ -29,14 +29,12 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     >
       <body className="min-h-full flex flex-col bg-background text-foreground transition-colors duration-200">
         <ThemeProvider>
-          <AuthProvider>
-            <main className="flex flex-1 flex-col">
-              <Navbar />
-              {children}
-              <Toaster position="top-right" richColors />
-              <Footer />
-            </main>
-          </AuthProvider>
+          <main className="flex flex-1 flex-col">
+            <Navbar />
+            {children}
+            <Toaster position="top-right" richColors />
+            <Footer />
+          </main>
         </ThemeProvider>
       </body>
     </html>

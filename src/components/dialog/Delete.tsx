@@ -13,7 +13,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 
-// Reuse the IManagedEvent type defined in Edit.tsx
+import { toast } from "sonner";
 import type { IManagedEvent } from "@/components/dialog/Edit";
 
 /**
@@ -37,6 +37,40 @@ export default function DeleteDialog({
   setDeleteEvent,
   onConfirmDelete,
 }: DeleteDialogProps) {
+  const handleDelete = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    if (!deleteEvent?._id) return;
+
+    const apiUrl = (
+      process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000"
+    ).replace(/\/+$/, "");
+
+    try {
+      const res = await fetch(`${apiUrl}/upcoming-event/${deleteEvent._id}`, {
+        method: "DELETE",
+      });
+
+      const data = await res.json().catch(() => ({}));
+
+      if (!res.ok) {
+        throw new Error(data.message || "Delete failed");
+      }
+
+      toast.success("Event Deleted", {
+        description: `"${deleteEvent.title}" has been removed.`,
+      });
+
+      setDeleteEvent(null);
+      window.location.reload();
+    } catch (error) {
+      console.error("Delete error:", error);
+      toast.error("Delete Failed", {
+        description:
+          error instanceof Error ? error.message : "Something went wrong.",
+      });
+    }
+  };
+
   return (
     <Dialog
       open={!!deleteEvent}
@@ -63,7 +97,7 @@ export default function DeleteDialog({
           </Button>
           <Button
             type="button"
-            onClick={onConfirmDelete}
+            onClick={handleDelete}
             className="rounded-full bg-red-600 font-bold text-white hover:bg-red-700"
           >
             Delete Event
@@ -73,4 +107,3 @@ export default function DeleteDialog({
     </Dialog>
   );
 }
-
