@@ -17,7 +17,7 @@ import {
 
 import { cn } from "@/lib/utils";
 import { authClient } from "@/lib/auth-client";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -29,6 +29,9 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 import { ThemeToggle } from "@/components/home/theme-toggle";
+// import { AvatarImage } from "@base-ui/react";
+// import { AvatarImage } from "@base-ui/react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 type NavLink = {
   href: string;
@@ -37,12 +40,12 @@ type NavLink = {
 
 const NAV_LINKS: NavLink[] = [
   { href: "/", label: "Home" },
-  { href: "/about", label: "About" },
+  // { href: "/about", label: "About" },
   { href: "/features", label: "Features" },
   { href: "/upcoming", label: "▦ Upcoming Events" },
-  { href: "/events", label: "All Events" },
+  // { href: "/events", label: "All Events" },
   { href: "/create-event", label: "Create Event" },
-  { href: "/contact", label: "Contact Us" },
+  // { href: "/contact", label: "Contact Us" },
 ];
 
 // Brand Logo
@@ -118,6 +121,7 @@ function ProfileMenu({
     name: string;
     email: string;
     role?: string;
+    image?: string;
   };
 }) {
   const firstName = user.name.split(" ")[0];
@@ -142,7 +146,23 @@ function ProfileMenu({
             className="h-9 gap-1.5 pr-1.5 pl-1.5 hover:bg-muted/70"
             aria-label="Open account menu"
           >
+            {/* <Avatar>
+  <AvatarImage
+    src={user?.image ?? undefined}
+    alt={user?.name ?? "User"}
+    referrerPolicy="no-referrer"
+  />
+  <AvatarFallback>
+    {user?.name?.charAt(0)?.toUpperCase() ?? "U"}
+  </AvatarFallback>
+</Avatar> */}
             <Avatar size="sm">
+              <AvatarImage
+                src={(user.image as string) || undefined}
+                alt={user?.name ?? "User"}
+                referrerPolicy="no-referrer"
+              />
+
               <AvatarFallback className="bg-[#2aa79b]/15 font-medium text-[#149c8e] dark:text-[#3ec2b4]">
                 {initials || "U"}
               </AvatarFallback>
