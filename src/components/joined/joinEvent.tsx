@@ -1,0 +1,82 @@
+"use client";
+
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Heart, CheckCircle2 } from "lucide-react";
+import { authClient } from "@/lib/auth-client";
+
+interface JoinEventsPageProps {
+  event: {
+    _id: string;
+    title: string;
+    date?: string;
+    venue?: string;
+    thumbnail?: string;
+    description?: string;
+    email?: string;
+    category?: string;
+  };
+}
+
+const JoinEventsPage = ({ event }: JoinEventsPageProps) => {
+  const { data: session, isPending } = authClient.useSession();
+
+  const user = session?.user;
+
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [hasJoined, setHasJoined] = useState(false);
+  console.log("event", event);
+  const handelJoined = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log(user);
+    const data = {
+      userName: user?.name,
+      userEmail: user?.email,
+
+      ...event,
+
+      bookingDate: new Date(),
+    };
+    console.log(data);
+    // `${process.env.NEXT_PUBLIC_API_UR}joinevent`
+    const res = await fetch(`http://localhost:8000/joinevent`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+    const eventres = await res.json();
+    console.log(eventres);
+  };
+  return (
+    <div>
+      <form onSubmit={handelJoined}>
+        <Button
+          type="submit"
+          onClick={() => setDialogOpen(true)}
+          disabled={hasJoined}
+          className={`h-10 rounded-full px-6 text-sm font-bold text-white ${
+            hasJoined
+              ? "bg-teal-600 hover:bg-teal-700"
+              : "bg-[#e5483e] hover:bg-[#d43d33]"
+          }`}
+        >
+          {hasJoined ? (
+            <>
+              <CheckCircle2 className="mr-2 size-4" />
+              Joined
+            </>
+          ) : (
+            <>
+              <Heart className="mr-2 size-4 fill-white" />
+              Join Event
+            </>
+          )}
+        </Button>
+      </form>
+    </div>
+  );
+};
+
+export default JoinEventsPage;

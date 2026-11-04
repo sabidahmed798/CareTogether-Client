@@ -42,10 +42,11 @@ const NAV_LINKS: NavLink[] = [
   { href: "/", label: "Home" },
   // { href: "/about", label: "About" },
   { href: "/features", label: "Features" },
+  // { href: "/upcoming-events", label: "▦ Upcoming Events" },
   { href: "/upcoming", label: "▦ Upcoming Events" },
   // { href: "/events", label: "All Events" },
   { href: "/create-event", label: "Create Event" },
-  // { href: "/contact", label: "Contact Us" },
+  { href: "/all-joinedevent", label: "Joined Events" },
 ];
 
 // Brand Logo
