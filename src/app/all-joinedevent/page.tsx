@@ -1,25 +1,3 @@
-// import { auth } from "@/lib/auth";
-// import { headers } from "next/headers";
-
-// const AllJoinedeventPage = async () => {
-//   const session = await auth.api.getSession({
-//     headers: await headers(),
-//   });
-
-//   const user = session?.user;
-//   console.log("user", user);
-//   const res = await fetch(
-//     `http://localhost:8000/all-joinedevent/${user?.email}`,
-//   );
-
-//   const alljoined = await res.json();
-//   console.log("alljoined", alljoined);
-
-//   return <div>All Joinedevent Page</div>;
-// };
-
-// export default AllJoinedeventPage;
-
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import Image from "next/image";

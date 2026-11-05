@@ -115,7 +115,7 @@ export function HeroBanner() {
       <div className="absolute inset-0 -z-10 overflow-hidden">
         <div className="animate-hero-zoom-in absolute inset-0">
           <Image
-            src="/images/banner.png.jpg"
+            src="/images/banner.png"
             alt="Historic Jashore campus building framed by palm trees and flower gardens"
             fill
             priority
@@ -153,14 +153,14 @@ export function HeroBanner() {
           <Button
             variant="brand"
             size="lg"
-            render={<Link href="/contact" />}
+            render={<Link href="/create-event" />}
             className="group h-11 gap-2 rounded-full px-6 text-[0.95rem] shadow-lg shadow-[#ff6b5b]/30 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-[#ff6b5b]/45 active:translate-y-0"
           >
-            Join Us
-            <ArrowRightIcon
+            Create an Event
+            {/* <ArrowRightIcon
               aria-hidden="true"
               className="transition-transform duration-300 group-hover:translate-x-1"
-            />
+            /> */}
           </Button>
 
           <Button
@@ -169,7 +169,7 @@ export function HeroBanner() {
             render={<Link href="/upcoming" />}
             className="group h-11 gap-2 rounded-full border-white/45 bg-white/10 px-6 text-[0.95rem] text-white backdrop-blur-md transition-all duration-300 hover:-translate-y-0.5 hover:border-white/80 hover:bg-white/20 hover:text-white hover:shadow-lg hover:shadow-black/25 focus-visible:border-white/70 focus-visible:ring-white/40 active:translate-y-0 dark:border-white/25"
           >
-            Explore Initiatives
+            Explore Upcoming Events
             <ArrowRightIcon
               aria-hidden="true"
               className="transition-transform duration-300 group-hover:translate-x-1"

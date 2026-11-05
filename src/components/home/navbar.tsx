@@ -41,12 +41,12 @@ type NavLink = {
 const NAV_LINKS: NavLink[] = [
   { href: "/", label: "Home" },
   // { href: "/about", label: "About" },
-  { href: "/features", label: "Features" },
+  // { href: "/features", label: "Features" },
   // { href: "/upcoming-events", label: "▦ Upcoming Events" },
   { href: "/upcoming", label: "▦ Upcoming Events" },
   // { href: "/events", label: "All Events" },
   { href: "/create-event", label: "Create Event" },
-  { href: "/all-joinedevent", label: "Joined Events" },
+  // { href: "/all-joinedevent", label: "Joined Events" },
 ];
 
 // Brand Logo
@@ -214,7 +214,7 @@ function ProfileMenu({
         </DropdownMenuItem>
 
         <DropdownMenuItem
-          render={<Link href="/settings" />}
+          render={<Link href="/all-joinedevent" />}
           onClick={onNavigate}
         >
           <CalendarIcon aria-hidden="true" />
