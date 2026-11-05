@@ -26,13 +26,13 @@ async function fetchEventById(id: string): Promise<IUpcomingEvent | null> {
     // const token = jwtToken?.token;
     // console.log(token);
 
-    const token = await getTokenFromServer();
+    // const token = await getTokenFromServer();
 
     const res = await fetch(
       `${cleanApiUrl}/upcoming-event/${encodeURIComponent(id)}`,
       {
         headers: {
-          authorization: `Bearer ${token}`,
+          // authorization: `Bearer ${token}`,
         },
       },
       // {

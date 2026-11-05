@@ -20,14 +20,14 @@ export default function RecentUpcoming() {
   useEffect(() => {
     const getEvents = async () => {
       try {
-        const token = await getTokenFromClent();
+        // const token = await getTokenFromClent();
         const response = await fetch(
           `${process.env.NEXT_PUBLIC_API_URL}recent-upcoming`,
           {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
-              authorization: `Bearer ${token}`,
+              // authorization: `Bearer ${token}`,
             },
           },
         );

@@ -18,7 +18,7 @@ if(!user){
 
 export const config = {
   matcher: [
-       '/upcoming/:path*',
+      //  '/upcoming/:path*',
     '/create-event/:path*',
     '/all-joinedevent/:path*',
   ],

@@ -25,7 +25,7 @@ async function fetchUpcomingEvents(): Promise<IUpcomingEvent[]> {
   // });
 
   // console.log(token);
-  const token = await getTokenFromServer();
+  // const token = await getTokenFromServer();
 
   const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
@@ -34,7 +34,7 @@ async function fetchUpcomingEvents(): Promise<IUpcomingEvent[]> {
   try {
     const res = await fetch(`${cleanApiUrl}/upcoming-event`, {
       headers: {
-        authorization: `Bearer ${token}`,
+        // authorization: `Bearer ${token}`,
       },
     });
 
