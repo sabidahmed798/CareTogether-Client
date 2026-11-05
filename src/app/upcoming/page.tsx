@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import UpcomingEvents from "@/components/home/upcoming-events";
 
-import { getTokenFromServer } from "@/lib/getTokenFromServer";
-
 export const metadata: Metadata = {
   title: "Upcoming Events | CareTogether",
   description: "Explore upcoming community events in Jashore.",

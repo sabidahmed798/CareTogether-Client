@@ -54,7 +54,7 @@ const JoinEventsPage = ({ event }: JoinEventsPageProps) => {
 
     try {
       const token = await getTokenFromClent();
-      const res = await fetch(`http://localhost:8000/joinevent`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}joinevent`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -27,7 +27,7 @@ const AllJoinedeventPage = async () => {
 
   const token = await getTokenFromServer();
   const res = await fetch(
-    `http://localhost:8000/all-joinedevent/${user?.email}`,
+    `${process.env.NEXT_PUBLIC_API_URL}all-joinedevent/${user?.email}`,
     {
       method: "GET",
       headers: {

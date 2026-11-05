@@ -25,7 +25,7 @@ import EditDialog, {
   type EditForm,
 } from "@/components/dialog/Edit";
 import DeleteDialog from "@/components/dialog/Delete";
-import { authClient } from "@/lib/auth-client";
+
 import { getTokenFromClent } from "@/lib/getTokenFromClent";
 
 // (IManagedEvent is now imported from @/components/dialog/EventDialogs)
