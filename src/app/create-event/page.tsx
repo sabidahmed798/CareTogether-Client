@@ -18,6 +18,8 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
 
+import { getTokenFromClent } from "@/lib/getTokenFromClent";
+
 const categories = [
   "Health Camp",
   "Clean-up Drive",
@@ -79,6 +81,7 @@ export default function CreateEventPage() {
     setSuccess(false);
 
     try {
+      const token = await getTokenFromClent();
       const apiUrl = (
         process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000"
       ).replace(/\/+$/, "");
@@ -87,6 +90,7 @@ export default function CreateEventPage() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
           ...formData,
@@ -94,20 +98,20 @@ export default function CreateEventPage() {
         }),
       });
 
-      const data = await res.json().catch(() => ({}));
+      const result = await res.json().catch(() => ({}));
 
-      console.log("Event response:", data);
+      console.log("Event response:", result);
 
       // Only check HTTP response status
       if (!res.ok) {
         throw new Error(
-          data.message || "Failed to create event. Please try again.",
+          result.message || "Failed to create event. Please try again.",
         );
       }
 
       // Success Toast
       toast.success("Event Created Successfully!", {
-        description: data.message || "",
+        description: result.message || "",
       });
 
       setSuccess(true);

@@ -25,6 +25,8 @@ import EditDialog, {
   type EditForm,
 } from "@/components/dialog/Edit";
 import DeleteDialog from "@/components/dialog/Delete";
+import { authClient } from "@/lib/auth-client";
+import { getTokenFromClent } from "@/lib/getTokenFromClent";
 
 // (IManagedEvent is now imported from @/components/dialog/EventDialogs)
 
@@ -84,7 +86,7 @@ const INITIAL_EVENTS: IManagedEvent[] = [
 
 export default function ManageEventsPage() {
   // State for all events
-  const [events, setEvents] = React.useState<IManagedEvent[]>(INITIAL_EVENTS);
+  const [events, setEvents] = React.useState<IManagedEvent[]>([]);
 
   // Modals state
   const [editEvent, setEditEvent] = React.useState<IManagedEvent | null>(null);
@@ -105,10 +107,24 @@ export default function ManageEventsPage() {
   React.useEffect(() => {
     async function loadApiEvents() {
       try {
+        const token = await getTokenFromClent();
         const apiUrl =
           process.env.Next_PUBLIC_API_URL || "http://localhost:8000";
         const cleanUrl = apiUrl.replace(/\/+$/, "");
-        const res = await fetch(`${cleanUrl}/upcoming-event`);
+        const res = await fetch(`${cleanUrl}/upcoming-event`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            authorization: `Bearer ${token}`,
+          },
+        });
+
+        //    const res = await fetch(`${apiUrl}/upcoming-event`, {
+        // method: "POST",
+        // headers: {
+        //   "Content-Type": "application/json",
+        //   authorization: `Bearer ${token}`,
+        // },
 
         if (res.ok) {
           const data = await res.json();

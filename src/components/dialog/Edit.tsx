@@ -17,6 +17,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { getTokenFromClent } from "@/lib/getTokenFromClent";
 
 /**
  * The shape of an event managed on the "Manage My Events" page.
@@ -71,6 +72,7 @@ export default function EditDialog({
   setEditForm,
   onSaveEdit,
 }: EditDialogProps) {
+  console.log(editEvent);
   const handleUpdate = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -79,18 +81,17 @@ export default function EditDialog({
     const apiUrl = (
       process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000"
     ).replace(/\/+$/, "");
-
+    console.log(editEvent._id);
     try {
-      const res = await fetch(
-        `${apiUrl}/upcoming-event/${editEvent._id}`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(editForm),
+      const token = await getTokenFromClent();
+      const res = await fetch(`${apiUrl}/upcoming-event/${editEvent._id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: `Bearer ${token}`,
         },
-      );
+        body: JSON.stringify(editForm),
+      });
 
       const data = await res.json().catch(() => ({}));
 

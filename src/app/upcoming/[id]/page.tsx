@@ -5,6 +5,9 @@ import {
   UpcomingDetailsView,
   type IUpcomingEvent,
 } from "@/components/upcoming/upcoming-details-view";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
+import { getTokenFromServer } from "@/lib/getTokenFromServer";
 
 type UpcomingDetailPageProps = {
   params: Promise<{ id: string }>;
@@ -16,11 +19,20 @@ async function fetchEventById(id: string): Promise<IUpcomingEvent | null> {
   const cleanApiUrl = API_URL.replace(/\/+$/, "");
 
   try {
+    // const jwtToken = await auth.api.getToken({
+    //   headers: await headers(),
+    // });
+
+    // const token = jwtToken?.token;
+    // console.log(token);
+
+    const token = await getTokenFromServer();
+
     const res = await fetch(
       `${cleanApiUrl}/upcoming-event/${encodeURIComponent(id)}`,
       {
         headers: {
-          authorization: "user logged in",
+          authorization: `Bearer ${token}`,
         },
       },
       // {

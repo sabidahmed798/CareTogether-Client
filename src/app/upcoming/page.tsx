@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import UpcomingEvents from "@/components/home/upcoming-events";
 
+import { getTokenFromServer } from "@/lib/getTokenFromServer";
+
 export const metadata: Metadata = {
   title: "Upcoming Events | CareTogether",
   description: "Explore upcoming community events in Jashore.",
@@ -18,23 +20,23 @@ export interface IUpcomingEvent {
 }
 
 async function fetchUpcomingEvents(): Promise<IUpcomingEvent[]> {
+  // const { token } = await auth.api.getToken({
+  //   headers: await headers(),
+  // });
+
+  // console.log(token);
+  const token = await getTokenFromServer();
+
   const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
   const cleanApiUrl = apiUrl.replace(/\/+$/, "");
 
   try {
-    const res = await fetch(
-      `${cleanApiUrl}/upcoming-event`,
-      // {
-      //   headers: {
-      //     authorization: "user logged in",
-      //   },
-      // },
-
-      {
-        cache: "no-store",
+    const res = await fetch(`${cleanApiUrl}/upcoming-event`, {
+      headers: {
+        authorization: `Bearer ${token}`,
       },
-    );
+    });
 
     if (!res.ok) {
       console.error("Failed to fetch upcoming events:", res.status);

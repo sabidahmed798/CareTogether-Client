@@ -15,6 +15,7 @@ import {
 
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
+import { getTokenFromServer } from "@/lib/getTokenFromServer";
 
 const AllJoinedeventPage = async () => {
   const session = await auth.api.getSession({
@@ -24,8 +25,16 @@ const AllJoinedeventPage = async () => {
   const user = session?.user;
   console.log("user", user);
 
+  const token = await getTokenFromServer();
   const res = await fetch(
     `http://localhost:8000/all-joinedevent/${user?.email}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `Bearer ${token}`,
+      },
+    },
   );
 
   const alljoined = await res.json();

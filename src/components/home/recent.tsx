@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { CalendarDays, MapPin, ArrowUpRight } from "lucide-react";
+import { getTokenFromClent } from "@/lib/getTokenFromClent";
 
 interface Event {
   _id: string;
@@ -19,8 +20,16 @@ export default function RecentUpcoming() {
   useEffect(() => {
     const getEvents = async () => {
       try {
+        const token = await getTokenFromClent();
         const response = await fetch(
           `${process.env.NEXT_PUBLIC_API_URL}recent-upcoming`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              authorization: `Bearer ${token}`,
+            },
+          },
         );
 
         if (!response.ok) {

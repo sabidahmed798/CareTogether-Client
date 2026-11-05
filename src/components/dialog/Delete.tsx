@@ -15,6 +15,7 @@ import {
 
 import { toast } from "sonner";
 import type { IManagedEvent } from "@/components/dialog/Edit";
+import { getTokenFromClent } from "@/lib/getTokenFromClent";
 
 /**
  * Props for the DeleteDialog component.
@@ -46,8 +47,13 @@ export default function DeleteDialog({
     ).replace(/\/+$/, "");
 
     try {
+      const token = await getTokenFromClent();
       const res = await fetch(`${apiUrl}/upcoming-event/${deleteEvent._id}`, {
         method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: `Bearer ${token}`,
+        },
       });
 
       const data = await res.json().catch(() => ({}));
